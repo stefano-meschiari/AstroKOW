@@ -16,7 +16,7 @@ app.use(express.static(__dirname + "/public"));
 var template = fs.readFileSync("template.html", {encoding: 'utf8'});
 
 var cows = ['default', 'default', 'default', 'dragon', 'kitty', 'meow', 'stegosaurus',
-            'stegosaurus', 'stegosaurus'];
+            'stegosaurus', 'stegosaurus', 'cower'];
 
 app.get("/", function(req, res) {
     abstracts.reset();
