@@ -127,14 +127,10 @@ Markov.prototype.freeze = function(fn, callback) {
     fs.writeFile(fn, JSON.stringify(this), {encoding:'utf8'}, callback);
 };
 
-Markov.defrost = function(fn, callback) {
-    fs.readFile(fn, {encoding: 'utf8'}, function(err, data) {
-        if (err)
-            throw data;
-
-        var m = new Markov(JSON.parse(data));
-        callback(m);
-    });
+Markov.defrost = function(fn) {
+    var data = fs.readFileSync(fn, {encoding: 'utf8'});    
+    var m = new Markov(JSON.parse(data));
+    return m;
 };
 
 module.exports = Markov;

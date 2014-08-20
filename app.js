@@ -4,10 +4,8 @@ var Markov = require('./js/markov'),
     cow = require('cowsay'),
     wrap = require('wordwrap')(80);
 
-var abstracts = new Markov(fs.readFileSync('js/abstracts.txt', {encoding: 'utf8' }),
-                          1);
-var titles = new Markov(fs.readFileSync('js/titles.txt', {encoding: 'utf8' }),
-                        1);
+var abstracts = Markov.defrost('js/abstracts.json');
+var titles = new Markov.defrost('js/titles.json');
 
 var express = require('express');
 var app = express();
@@ -22,7 +20,7 @@ app.get("/", function(req, res) {
     abstracts.reset();
     titles.reset();
     var title = titles.text({min_tokens: 2, capitalize:true });
-    var abstract = abstracts.text({ min_tokens:100 });
+    var abstract = abstracts.text({ min_tokens:40 });
 
     res.send(_.template(template,
                         { title: title,
