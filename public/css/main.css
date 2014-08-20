@@ -1,0 +1,22 @@
+#item {
+  padding:50px;
+  font-family:"Inconsolata", monospace;
+}
+
+#title {
+  text-align:center;
+  font-weight:700;
+  margin-bottom:20px;
+  font-size:150%;
+}
+
+#abstract {
+  display:table;
+  margin:0 auto;
+  border:none;
+}
+
+#toolbar {
+  font-size:150%;
+  text-align:center;
+}

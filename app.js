@@ -1,59 +1,36 @@
+var Markov = require('./js/markov'),
+    fs = require('fs'),
+    _ = require('underscore'),
+    cow = require('cowsay'),
+    wrap = require('wordwrap')(80);
+
+var abstracts = new Markov(fs.readFileSync('js/abstracts.txt', {encoding: 'utf8' }),
+                          1);
+var titles = new Markov(fs.readFileSync('js/titles.txt', {encoding: 'utf8' }),
+                        1);
+
 var express = require('express');
-var path = require('path');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
 var app = express();
+app.use(express.static(__dirname + "/public"));
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+var template = fs.readFileSync("template.html", {encoding: 'utf8'});
 
-app.use(favicon());
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+var cows = ['default', 'default', 'default', 'dragon', 'kitty', 'meow', 'stegosaurus',
+            'stegosaurus', 'stegosaurus'];
 
-app.use('/', routes);
-app.use('/users', users);
+app.get("/", function(req, res) {
+    abstracts.reset();
+    titles.reset();
+    var title = titles.text({min_tokens: 2, capitalize:true });
+    var abstract = abstracts.text({ min_tokens:100 });
 
-/// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+    res.send(_.template(template,
+                        { title: title,
+                          article: cow.say( { text: wrap(abstract),
+                                              f: _.sample(cows)} )}));
 });
 
-/// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+var port = Number(process.env.PORT || 5000);
+app.listen(port, function() {
+  console.log("Listening on " + port);
 });
-
-
-module.exports = app;
