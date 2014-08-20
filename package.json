@@ -19,5 +19,6 @@
     },
     "scripts": {
         "start": "node app.js"
-    }
+    },
+    "main": "app.js"
 }
