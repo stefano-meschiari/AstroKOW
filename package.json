@@ -1,7 +1,9 @@
 {
     "name": "astrokow",
     "version": "0.0.1",
-    "private": true,
+    "engines": {
+        "node": "0.10.x"
+    },
     "dependencies": {
         "express": "~4.2.0",
         "static-favicon": "~1.0.0",
@@ -14,5 +16,8 @@
         "cowsay":"*",
         "string":"*",
         "wordwrap":"*"
+    },
+    "scripts": {
+        "start": "node app.js"
     }
 }
