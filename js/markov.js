@@ -100,6 +100,11 @@ Markov.prototype.text = function(options) {
 
     do {
         t = this.next();
+
+        if (t.indexOf(options.end_char) >= 0) {
+            t = t.substr(0, t.indexOf(options.end_char)+1);
+        }
+        
         text.push(t);
     } while (!(t.endsWith(options.end_char)));
 
