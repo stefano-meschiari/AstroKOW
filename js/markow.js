@@ -9,7 +9,7 @@ var _ = require('underscore'),
     fs = require('fs');
 require('string').extendPrototype();
 
-function Markov(text, order) {
+function Markow(text, order) {
     if (typeof(text) === 'object') {
         _.extend(this, text);
     } else {
@@ -17,7 +17,7 @@ function Markov(text, order) {
     }
 };
 
-// Initializes the Markov object.
+// Initializes the Markow object.
 function init(m, text, order) {
     order = order || 1;
     var arro = text.split(/\s+/);
@@ -66,7 +66,7 @@ function init(m, text, order) {
     
 }
 
-Markov.prototype.next = function() {
+Markow.prototype.next = function() {
     
     if (!this.current) {
         this.current = _.sample(this.starts);
@@ -77,15 +77,15 @@ Markov.prototype.next = function() {
     return this.toks_n2s[this.current];    
 };
 
-Markov.prototype.reset = function() {
+Markow.prototype.reset = function() {
     this.current = null;
 };
 
-Markov.prototype.size = function() {
+Markow.prototype.size = function() {
     return this._size;
 };
 
-Markov.prototype.text = function(options) {
+Markow.prototype.text = function(options) {
     options = options || {};
     options.min_tokens = options.min_tokens || 30;
     options.end_char = options.end_char || '.';
@@ -128,14 +128,14 @@ Markov.prototype.text = function(options) {
     return final;
 };
 
-Markov.prototype.freeze = function(fn, callback) {
+Markow.prototype.freeze = function(fn, callback) {
     fs.writeFile(fn, JSON.stringify(this), {encoding:'utf8'}, callback);
 };
 
-Markov.defrost = function(fn) {
+Markow.defrost = function(fn) {
     var data = fs.readFileSync(fn, {encoding: 'utf8'});    
-    var m = new Markov(JSON.parse(data));
+    var m = new Markow(JSON.parse(data));
     return m;
 };
 
-module.exports = Markov;
+module.exports = Markow;

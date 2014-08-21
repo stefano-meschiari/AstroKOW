@@ -1,11 +1,11 @@
-var Markov = require('./js/markov'),
+var Markow = require('./js/markow'),
     fs = require('fs'),
     _ = require('underscore'),
     cow = require('cowsay'),
     wrap = require('wordwrap')(80);
 
-var abstracts = Markov.defrost('js/abstracts.json');
-var titles = new Markov.defrost('js/titles.json');
+var abstracts = Markow.defrost('js/abstracts.json');
+var titles = new Markow.defrost('js/titles.json');
 
 var express = require('express');
 var app = express();
