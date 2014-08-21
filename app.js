@@ -19,7 +19,7 @@ var cows = ['default', 'default', 'default', 'dragon', 'kitty', 'meow', 'stegosa
 app.get("/", function(req, res) {
     abstracts.reset();
     titles.reset();
-    var title = titles.text({min_tokens: 2, capitalize:true });
+    var title = titles.text({min_tokens: 6, capitalize:true });
     var abstract = abstracts.text({ min_tokens:40 });
 
     res.send(_.template(template,
